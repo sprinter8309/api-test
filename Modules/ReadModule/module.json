@@ -1,0 +1,11 @@
+{
+    "name": "ReadModule",
+    "alias": "readmodule",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\ReadModule\\Providers\\ReadModuleServiceProvider"
+    ],
+    "files": []
+}

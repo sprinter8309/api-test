@@ -1,0 +1,11 @@
+{
+    "name": "CarLease",
+    "alias": "carlease",
+    "description": "",
+    "keywords": [],
+    "priority": 0,
+    "providers": [
+        "Modules\\CarLease\\Providers\\CarLeaseServiceProvider"
+    ],
+    "files": []
+}

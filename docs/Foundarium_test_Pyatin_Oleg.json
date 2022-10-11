@@ -1,0 +1,429 @@
+{
+  "openapi": "3.0.3",
+  "info": {
+    "title": "Foundarium API test",
+    "version": "1.0.0",
+    "description": "Description for API test (Pyatin Oleg)",
+    "license": {
+      "name": "Apache 2.0",
+      "url": "http://www.apache.org/licenses/LICENSE-2.0.html"
+    }
+  },
+  "externalDocs": {
+    "description": "Find out more about Swagger",
+    "url": "http://swagger.io"
+  },
+  "servers": [
+    {
+      "url": "https://found-api-test.loc/api/v1"
+    }
+  ],
+  "tags": [
+    {
+      "name": "car",
+      "description": "Request for actions with car entity"
+    },
+    {
+      "name": "person",
+      "description": "Request for actions with person entity"
+    }
+  ],
+  "paths": {
+    "/car/all": {
+      "get": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Retrieve all cars list",
+        "description": "Retrieving all available cars with lease owners",
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "array",
+                  "items": {
+                    "$ref": "#/components/schemas/CarInfo"
+                  }
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/car/{car_id}}": {
+      "get": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Retrieve info about car",
+        "description": "Retrieving info about single car",
+        "parameters": [
+          {
+            "name": "car_id",
+            "in": "path",
+            "description": "ID of car to get info",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "$ref": "#/components/schemas/CarInfo"
+                }
+              }
+            }
+          },
+          "404": {
+            "description": "Car not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Soft deletes a car from list",
+        "description": "Remove car from list and stop lease if its exist",
+        "parameters": [
+          {
+            "name": "car_id",
+            "in": "path",
+            "description": "Car id to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Car record successfully deleted"
+          }
+        }
+      }
+    },
+    "/car": {
+      "post": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Create new car",
+        "description": "Create new car",
+        "requestBody": {
+          "description": "Params for car creating",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Car"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful creating"
+          },
+          "500": {
+            "description": "Error is occured"
+          }
+        }
+      }
+    },
+    "/car/assign": {
+      "put": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Assign car to person",
+        "description": "Assign car to person (with checking this possibility)",
+        "requestBody": {
+          "description": "Params for car assign",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CarAssign"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful assign"
+          },
+          "500": {
+            "description": "Error is occured"
+          }
+        }
+      }
+    },
+    "/car/free": {
+      "put": {
+        "tags": [
+          "car"
+        ],
+        "summary": "Free car from person",
+        "description": "Free car from person (stop active lease)",
+        "requestBody": {
+          "description": "Params for car free",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/CarFree"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful stop lease"
+          },
+          "500": {
+            "description": "Error is occured"
+          }
+        }
+      }
+    },
+    "/person/all": {
+      "get": {
+        "tags": [
+          "person"
+        ],
+        "summary": "Retrieve all persons list",
+        "description": "Retrieving all persons with lease cars",
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          }
+        }
+      }
+    },
+    "/person/{person_id}": {
+      "get": {
+        "tags": [
+          "person"
+        ],
+        "summary": "Retrieve info about person",
+        "description": "Retrieving info about single person",
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "description": "ID of person to get info",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Successful operation"
+          },
+          "404": {
+            "description": "Person not found"
+          }
+        }
+      },
+      "delete": {
+        "tags": [
+          "person"
+        ],
+        "summary": "Soft deletes a person from list",
+        "description": "Remove person from list and stop its lease if that exist",
+        "parameters": [
+          {
+            "name": "person_id",
+            "in": "path",
+            "description": "Person id to delete",
+            "required": true,
+            "schema": {
+              "type": "integer",
+              "format": "int64"
+            }
+          }
+        ],
+        "responses": {
+          "200": {
+            "description": "Person record successfully deleted"
+          }
+        }
+      }
+    },
+    "/person": {
+      "post": {
+        "tags": [
+          "person"
+        ],
+        "summary": "Create new person",
+        "description": "Create new person",
+        "requestBody": {
+          "description": "Params for person creating",
+          "content": {
+            "application/x-www-form-urlencoded": {
+              "schema": {
+                "$ref": "#/components/schemas/Person"
+              }
+            }
+          },
+          "required": true
+        },
+        "responses": {
+          "200": {
+            "description": "Successful creating"
+          },
+          "500": {
+            "description": "Error is occured"
+          }
+        }
+      }
+    }
+  },
+  "components": {
+    "schemas": {
+      "Car": {
+        "required": [
+          "brand",
+          "model",
+          "number"
+        ],
+        "type": "object",
+        "properties": {
+          "brand": {
+            "type": "string",
+            "example": "Kia"
+          },
+          "model": {
+            "type": "string",
+            "example": "Rio"
+          },
+          "color": {
+            "type": "string",
+            "example": "silver"
+          },
+          "number": {
+            "type": "string",
+            "example": "ac100h"
+          }
+        }
+      },
+      "Person": {
+        "required": [
+          "name",
+          "phone"
+        ],
+        "type": "object",
+        "properties": {
+          "name": {
+            "type": "string",
+            "example": "Tester"
+          },
+          "surname": {
+            "type": "string",
+            "example": "Tester"
+          },
+          "age": {
+            "type": "integer",
+            "format": "int64",
+            "example": 25
+          },
+          "phone": {
+            "type": "string",
+            "example": 89993332020
+          }
+        }
+      },
+      "CarAssign": {
+        "required": [
+          "car_id",
+          "person_id"
+        ],
+        "type": "object",
+        "properties": {
+          "car_id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 3
+          },
+          "person_id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 7
+          }
+        }
+      },
+      "CarFree": {
+        "required": [
+          "car_id"
+        ],
+        "type": "object",
+        "properties": {
+          "car_id": {
+            "type": "integer",
+            "format": "int64",
+            "example": 4
+          }
+        }
+      },
+      "CarInfo": {
+        "type": "object",
+        "properties": {
+          "car_id": {
+            "type": "string",
+            "example": 15
+          },
+          "car_brand": {
+            "type": "string",
+            "example": "Lada"
+          },
+          "car_model": {
+            "type": "string",
+            "example": "Priora"
+          },
+          "car_color": {
+            "type": "string",
+            "example": "green"
+          },
+          "car_number": {
+            "type": "string",
+            "example": "wt500h"
+          },
+          "person": {
+            "$ref": "#/components/schemas/ShortPersonInfo"
+          }
+        }
+      },
+      "ShortPersonInfo": {
+        "type": "object",
+        "properties": {
+          "id": {
+            "type": "string",
+            "example": 9
+          },
+          "name": {
+            "type": "string",
+            "example": "Tester"
+          },
+          "phone": {
+            "type": "string",
+            "example": 89004003030
+          }
+        }
+      }
+    }
+  }
+}
